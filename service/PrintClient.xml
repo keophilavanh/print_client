@@ -1,0 +1,17 @@
+<service>
+  <id>PrintClient</id>
+  <name>Print Client</name>
+  <description>Receives print jobs from Print Service and sends them to the shop printers.</description>
+  <executable>C:\Program Files\nodejs\node.exe</executable>
+  <arguments>--env-file-if-exists=.env --disable-warning=ExperimentalWarning dist\server.js</arguments>
+  <workingdirectory>D:\sambaPOS\print_client</workingdirectory>
+  <startmode>Automatic</startmode>
+  <stoptimeout>15 sec</stoptimeout>
+  <onfailure action="restart" delay="10 sec"/>
+  <resetfailure>1 hour</resetfailure>
+  <logpath>D:\sambaPOS\print_client\service\logs</logpath>
+  <log mode="roll-by-size">
+    <sizeThreshold>10240</sizeThreshold>
+    <keepFiles>5</keepFiles>
+  </log>
+</service>

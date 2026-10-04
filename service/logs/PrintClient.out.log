@@ -1,0 +1,31 @@
+[print_client] Print Client starting on SOKXAY-LOQ-PC (win32, Node v24.14.0)
+[print_client] SQLite store at data\print-client.db
+[print_client] Connecting to Print Service at https://printer.inthida.com
+[print_client] Listening on port 3020
+[print_client] Printer Casheer is online (Windows share host 192.168.100.86 is reachable)
+[print_client] Connected to Print Service
+[print_client] Paired with shop BarlisaCafe
+[print_client] Loaded 2 printer(s) from the shop: Casheer (windows \\localhost\pos2026), Kitchen Printer (tcp tcp://192.168.1.50:9100)
+[print_client] Print Client starting on SOKXAY-LOQ-PC (win32, Node v24.14.0)
+[print_client] SQLite store at data\print-client.db
+[print_client] Connecting to Print Service at https://printer.inthida.com
+[print_client] Listening on port 3020
+[print_client] Printer Casheer is online (Windows share host localhost is reachable)
+[print_client] Connected to Print Service
+[print_client] Paired with shop BarlisaCafe
+[print_client] Print Client starting on SOKXAY-LOQ-PC (win32, Node v24.14.0)
+[print_client] SQLite store at data\print-client.db
+[print_client] Connecting to Print Service at https://printer.inthida.com
+[print_client] Listening on port 3020
+[print_client] Printer Casheer is online (Windows share host localhost is reachable)
+[print_client] Connected to Print Service
+[print_client] Paired with shop BarlisaCafe
+[print_client] Received job d562137a for Casheer
+[print_client] Printer Casheer is online (Windows share host localhost is reachable)
+[print_client] Printed job d562137a on Casheer (24024 bytes, 112 ms, attempt 2)
+[print_client] Job aba1d202 removed by user
+[print_client] Job 2a4d5e7d removed by user
+[print_client] Received job 405ab7d2 for Casheer
+[print_client] Printed job 405ab7d2 on Casheer (24024 bytes, 142 ms)
+[print_client] Received job a5752365 for Casheer
+[print_client] Printed job a5752365 on Casheer (36744 bytes, 165 ms)

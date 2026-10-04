@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="lo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Print Client — ຄູ່ມືການນຳໃຊ້ / User Guide</title>
+<style>
+  :root {
+    --font: "Noto Sans Lao", "Phetsarath OT", "Saysettha OT", "Leelawadee UI", "Lao UI", "Segoe UI", system-ui, sans-serif;
+    --mono: "Cascadia Mono", Consolas, ui-monospace, monospace;
+    --bg: #f5f6fa;
+    --surface: #fff;
+    --border: #e7e9ef;
+    --text: #0e1525;
+    --text-2: #4a5468;
+    --muted: #8a93a6;
+    --accent: #5b4cf0;
+    --accent-soft: #efedff;
+    --green-soft: #e8f8ef;
+    --amber-soft: #fff5e1;
+    --red-soft: #fdecee;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { margin: 0; color: var(--text); background: var(--bg); font: 15px/1.75 var(--font); }
+  a { color: var(--accent); }
+  code, pre, kbd { font-family: var(--mono); font-size: 13px; }
+  code { padding: 1px 6px; border-radius: 5px; background: #f0f2f5; }
+  pre { margin: 10px 0 16px; padding: 14px 16px; overflow-x: auto; border-radius: 10px; color: #e6e8ef; background: #161b2b; line-height: 1.6; }
+  pre code { padding: 0; background: none; color: inherit; }
+  kbd { padding: 1px 6px; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 5px; background: #fff; }
+
+  body[data-lang="lo"] .en, body[data-lang="en"] .lo { display: none !important; }
+  body[data-lang="both"] .en:not(.inline) { color: var(--text-2); }
+  body[data-lang="both"] span.en:not(.inline) { display: block; }
+  body[data-lang="both"] .lo + .en.inline::before { content: " "; }
+  body[data-lang="both"] h2 .en, body[data-lang="both"] h3 .en { display: block; font-size: 0.72em; font-weight: 500; }
+
+  .topbar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 28px; border-bottom: 1px solid var(--border); background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(8px); }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .brand svg { width: 30px; height: 30px; padding: 6px; border-radius: 9px; color: #fff; background: var(--accent); }
+  .brand small { display: block; color: var(--muted); font-weight: 500; font-size: 12px; line-height: 1.2; }
+  .switch { display: inline-flex; gap: 4px; padding: 4px; border-radius: 10px; background: #f0f2f5; }
+  .switch button { height: 30px; padding: 0 12px; border: 0; border-radius: 7px; color: var(--text-2); background: none; font: 600 13px var(--font); cursor: pointer; }
+  .switch button.active { color: var(--text); background: #fff; box-shadow: 0 1px 2px rgba(14, 21, 37, 0.08); }
+
+  .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 28px; max-width: 1180px; margin: 0 auto; padding: 28px; }
+  nav { position: sticky; top: 84px; align-self: start; max-height: calc(100vh - 100px); overflow: auto; }
+  nav ol { margin: 0; padding: 0; list-style: none; counter-reset: toc; }
+  nav li { counter-increment: toc; }
+  nav a { display: block; padding: 6px 10px; border-radius: 8px; color: var(--text-2); text-decoration: none; font-size: 14px; line-height: 1.5; }
+  nav a::before { content: counter(toc) ". "; color: var(--muted); }
+  nav a:hover { color: var(--accent); background: var(--accent-soft); }
+
+  main { min-width: 0; }
+  section { margin-bottom: 22px; padding: 24px 28px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+  h1 { margin: 0 0 6px; font-size: 28px; line-height: 1.3; }
+  h2 { margin: 0 0 12px; font-size: 21px; line-height: 1.35; }
+  h3 { margin: 22px 0 8px; font-size: 16px; }
+  .lead { color: var(--text-2); font-size: 16px; }
+  ol.steps { padding-left: 22px; }
+  ol.steps > li { margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 4px; font-size: 14px; }
+  th, td { padding: 9px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+  td code { white-space: nowrap; }
+  .note, .warn, .tip { margin: 14px 0; padding: 12px 16px; border-radius: 10px; border-left: 4px solid; }
+  .note { border-color: var(--accent); background: var(--accent-soft); }
+  .tip { border-color: #12a150; background: var(--green-soft); }
+  .warn { border-color: #e0a100; background: var(--amber-soft); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 12px 0; }
+  .card { padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; background: #fafbfc; }
+  .card strong { display: block; margin-bottom: 2px; }
+  .card span { color: var(--text-2); font-size: 14px; }
+  details { margin: 10px 0; border: 1px solid var(--border); border-radius: 12px; background: #fafbfc; }
+  details[open] { background: #fff; }
+  summary { padding: 12px 16px; font-weight: 600; cursor: pointer; }
+  details > div { padding: 0 16px 12px; }
+  .facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 12px 0; }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; }
+  footer { padding: 8px 4px 28px; color: var(--muted); font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; padding: 16px; }
+    nav { position: static; max-height: none; }
+    section { padding: 20px; }
+    .topbar { padding: 10px 16px; }
+  }
+  @media print {
+    body { background: #fff; }
+    .topbar .switch, nav { display: none; }
+    .layout { display: block; padding: 0; }
+    section { break-inside: avoid-page; border: 0; padding: 0 0 12px; }
+    details { border: 0; }
+    details > div { display: block; }
+    pre { white-space: pre-wrap; }
+  }
+</style>
+</head>
+<body data-lang="both">
+
+<header class="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+    <span>Print Client<small><span class="lo">ຄູ່ມືການນຳໃຊ້</span><span class="en inline">User guide</span></small></span>
+  </div>
+  <div class="switch" role="group" aria-label="Language">
+    <button type="button" data-set-lang="lo">ລາວ</button>
+    <button type="button" data-set-lang="en">English</button>
+    <button type="button" data-set-lang="both">ລາວ + EN</button>
+  </div>
+</header>
+
+<div class="layout">
+  <nav>
+    <ol>
+      <li><a href="#overview"><span class="lo">ພາບລວມ</span><span class="en inline"> Overview</span></a></li>
+      <li><a href="#requirements"><span class="lo">ສິ່ງທີ່ຕ້ອງມີ</span><span class="en inline"> Requirements</span></a></li>
+      <li><a href="#share"><span class="lo">ແບ່ງປັນເຄື່ອງພິມ</span><span class="en inline"> Share the printer</span></a></li>
+      <li><a href="#install"><span class="lo">ຕິດຕັ້ງ Service</span><span class="en inline"> Install the service</span></a></li>
+      <li><a href="#winsw"><span class="lo">ຕິດຕັ້ງ WinSW</span><span class="en inline"> Install WinSW</span></a></li>
+      <li><a href="#portal"><span class="lo">ຕັ້ງຄ່າເຄື່ອງພິມໃນ Portal</span><span class="en inline"> Printer in the portal</span></a></li>
+      <li><a href="#dashboard"><span class="lo">ໜ້າ Dashboard</span><span class="en inline"> Dashboard</span></a></li>
+      <li><a href="#manage"><span class="lo">ຈັດການ Service</span><span class="en inline"> Manage the service</span></a></li>
+      <li><a href="#uninstall"><span class="lo">ຖອນການຕິດຕັ້ງ</span><span class="en inline"> Uninstall</span></a></li>
+      <li><a href="#settings"><span class="lo">ການຕັ້ງຄ່າ (.env)</span><span class="en inline"> Settings</span></a></li>
+      <li><a href="#troubleshooting"><span class="lo">ແກ້ໄຂບັນຫາ</span><span class="en inline"> Troubleshooting</span></a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <h1>Print Client</h1>
+      <p class="lead lo">Print Client ແມ່ນໂປຣແກຣມທີ່ເຮັດວຽກຢູ່ໃນຄອມພິວເຕີຂອງຮ້ານ. ມັນຮັບງານພິມ (ໃບບິນ, ໃບສັ່ງອາຫານ) ຈາກ Print Service ຜ່ານອິນເຕີເນັດ ແລ້ວສົ່ງໄປພິມທີ່ເຄື່ອງພິມຂອງຮ້ານ.</p>
+      <p class="lead en">Print Client runs on the shop's computer. It receives print jobs (receipts, kitchen orders) from Print Service over the internet and sends them to the shop's printers.</p>
+
+      <h3><span class="lo">ເຄື່ອງພິມທີ່ຮອງຮັບ</span><span class="en">Supported printers</span></h3>
+      <div class="cards">
+        <div class="card"><strong>Windows</strong><span class="lo">ເຄື່ອງພິມທີ່ແບ່ງປັນ (share) ໃນ Windows ເຊັ່ນ <code>\\localhost\POS2026</code></span><span class="en">A printer shared in Windows, e.g. <code>\\localhost\POS2026</code></span></div>
+        <div class="card"><strong>Network</strong><span class="lo">ເຄື່ອງພິມ LAN ຜ່ານ IP ແລະ port 9100 ເຊັ່ນ <code>tcp://192.168.1.50:9100</code></span><span class="en">A LAN printer by IP and port 9100, e.g. <code>tcp://192.168.1.50:9100</code></span></div>
+        <div class="card"><strong>USB</strong><span class="lo">ຂຽນຂໍ້ມູນໂດຍກົງໄປຫາອຸປະກອນ USB (ສ່ວນຫຼາຍໃຊ້ໃນ Linux)</span><span class="en">Writes straight to a USB device (mostly on Linux)</span></div>
+        <div class="card"><strong>Virtual</strong><span class="lo">ບໍ່ພິມແທ້ — ບັນທຶກເປັນໄຟລ໌ໃນ <code>data\printed</code> ເພື່ອທົດສອບ</span><span class="en">Doesn't print — saves a file in <code>data\printed</code> for testing</span></div>
+      </div>
+
+      <h3><span class="lo">ການຕັ້ງຄ່າຂອງເຄື່ອງນີ້</span><span class="en">This computer's setup</span></h3>
+      <dl class="facts">
+        <dt><span class="lo">ໂຟນເດີ</span><span class="en inline"> Folder</span></dt><dd><code>D:\sambaPOS\print_client</code></dd>
+        <dt><span class="lo">ເຄື່ອງພິມ</span><span class="en inline"> Printer</span></dt><dd>POS-80C (USB) → share <code>POS2026</code></dd>
+        <dt><span class="lo">ທີ່ຢູ່ເຄື່ອງພິມ</span><span class="en inline"> Address</span></dt><dd><code>\\localhost\POS2026</code></dd>
+        <dt>Dashboard</dt><dd><a href="http://localhost:3020">http://localhost:3020</a></dd>
+        <dt>Service</dt><dd><code>PrintClient</code> (Print Client)</dd>
+        <dt>Print Service</dt><dd><code>https://printer.inthida.com</code></dd>
+      </dl>
+    </section>
+
+    <section id="requirements">
+      <h2><span class="lo">ສິ່ງທີ່ຕ້ອງມີ</span><span class="en">Requirements</span></h2>
+      <ul>
+        <li><span class="lo">Windows 10 ຫຼື Windows 11</span><span class="en">Windows 10 or Windows 11</span></li>
+        <li><span class="lo"><strong>Node.js ເວີຊັນ 22 ຂຶ້ນໄປ</strong> — ດາວໂຫຼດຈາກ <a href="https://nodejs.org">nodejs.org</a> (ເລືອກ LTS)</span><span class="en"><strong>Node.js 22 or newer</strong> — download from <a href="https://nodejs.org">nodejs.org</a> (choose LTS)</span></li>
+        <li><span class="lo">ສິດ Administrator ເພື່ອຕິດຕັ້ງ ແລະ ຖອນ service</span><span class="en">Administrator rights to install and uninstall the service</span></li>
+        <li><span class="lo">ອິນເຕີເນັດ — ເພື່ອເຊື່ອມຕໍ່ Print Service ແລະ ດາວໂຫຼດ WinSW ໃນການຕິດຕັ້ງຄັ້ງທຳອິດ</span><span class="en">Internet — to reach Print Service and to download WinSW on the first install</span></li>
+        <li><span class="lo">ລະຫັດຈັບຄູ່ຮ້ານ (shop pairing code) ຈາກໜ້າ Shops ໃນ Portal</span><span class="en">The shop pairing code from the Shops page in the portal</span></li>
+      </ul>
+      <p class="lo">ກວດເບິ່ງເວີຊັນ Node.js:</p>
+      <p class="en">Check the Node.js version:</p>
+      <pre><code>node --version</code></pre>
+    </section>
+
+    <section id="share">
+      <h2><span class="lo">ແບ່ງປັນເຄື່ອງພິມໃນ Windows</span><span class="en">Share the printer in Windows</span></h2>
+      <p class="lo">Print Client ພິມຜ່ານຊື່ share ຂອງເຄື່ອງພິມ. ຖ້າເຄື່ອງພິມຍັງບໍ່ໄດ້ແບ່ງປັນ ໃຫ້ເຮັດຕາມນີ້:</p>
+      <p class="en">Print Client prints through the printer's share name. If the printer isn't shared yet:</p>
+      <ol class="steps">
+        <li><span class="lo">ເປີດ <strong>Settings → Bluetooth &amp; devices → Printers &amp; scanners</strong></span><span class="en">Open <strong>Settings → Bluetooth &amp; devices → Printers &amp; scanners</strong></span></li>
+        <li><span class="lo">ກົດເລືອກ <strong>POS-80C</strong> → <strong>Printer properties</strong></span><span class="en">Select <strong>POS-80C</strong> → <strong>Printer properties</strong></span></li>
+        <li><span class="lo">ແຖບ <strong>Sharing</strong> → ໝາຍ <strong>Share this printer</strong> → ຊື່ share: <code>POS2026</code> → <strong>OK</strong></span><span class="en"><strong>Sharing</strong> tab → tick <strong>Share this printer</strong> → share name <code>POS2026</code> → <strong>OK</strong></span></li>
+      </ol>
+      <p class="lo">ກວດວ່າ share ມີແລ້ວ (ເປີດ Command Prompt):</p>
+      <p class="en">Check that the share exists (in Command Prompt):</p>
+      <pre><code>net view \\localhost</code></pre>
+      <p class="lo">ຕ້ອງເຫັນແຖວ <code>POS2026   Print   POS-80C</code>.</p>
+      <p class="en">You should see a line <code>POS2026   Print   POS-80C</code>.</p>
+      <div class="note">
+        <span class="lo">ຊື່ share ບໍ່ສົນໃຈຕົວພິມໃຫຍ່-ນ້ອຍ: <code>POS2026</code> ແລະ <code>pos2026</code> ແມ່ນອັນດຽວກັນ.</span>
+        <span class="en">Share names aren't case-sensitive: <code>POS2026</code> and <code>pos2026</code> are the same.</span>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2><span class="lo">ຕິດຕັ້ງ Windows Service</span><span class="en">Install the Windows service</span></h2>
+      <p class="lo">ເມື່ອຕິດຕັ້ງເປັນ service ແລ້ວ Print Client ຈະເລີ່ມເອງທຸກຄັ້ງທີ່ເປີດຄອມ ແລະ ເລີ່ມໃໝ່ເອງພາຍໃນ 10 ວິນາທີ ຖ້າມັນຢຸດເຮັດວຽກ — ບໍ່ຕ້ອງເປີດໜ້າຕ່າງໃດໆໄວ້.</p>
+      <p class="en">As a service, Print Client starts with Windows and restarts itself within 10 seconds if it stops — no window needs to stay open.</p>
+      <ol class="steps">
+        <li><span class="lo">ປິດໜ້າຕ່າງ <code>npm start</code> ຫຼື <code>npm run dev</code> ທີ່ເປີດຢູ່ (ຖ້າມີ).</span><span class="en">Close any open <code>npm start</code> or <code>npm run dev</code> window.</span></li>
+        <li><span class="lo">ກົດສອງເທື່ອທີ່ <code>install-service.bat</code> ໃນໂຟນເດີ <code>D:\sambaPOS\print_client</code>.</span><span class="en">Double-click <code>install-service.bat</code> in <code>D:\sambaPOS\print_client</code>.</span></li>
+        <li><span class="lo">ກົດ <strong>Yes</strong> ເມື່ອ Windows ຖາມສິດ Administrator.</span><span class="en">Click <strong>Yes</strong> when Windows asks for administrator rights.</span></li>
+        <li><span class="lo">ລໍຖ້າຈົນເຫັນ <code>[OK] "Print Client" is installed and running</code> ແລ້ວກົດປຸ່ມໃດກໍ່ໄດ້ເພື່ອປິດ.</span><span class="en">Wait for <code>[OK] "Print Client" is installed and running</code>, then press any key to close.</span></li>
+        <li><span class="lo">ເປີດ <a href="http://localhost:3020">http://localhost:3020</a> ເພື່ອກວດສະຖານະ.</span><span class="en">Open <a href="http://localhost:3020">http://localhost:3020</a> to check the status.</span></li>
+      </ol>
+
+      <h3><span class="lo">ຕົວຕິດຕັ້ງເຮັດຫຍັງແດ່</span><span class="en">What the installer does</span></h3>
+      <ol>
+        <li><span class="lo">ກວດ Node.js 22+</span><span class="en">Checks for Node.js 22+</span></li>
+        <li><span class="lo">ຖອນ service ເກົ່າອອກ (ຖ້າມີ)</span><span class="en">Removes an older Print Client service, if any</span></li>
+        <li><span class="lo">ກວດວ່າ port 3020 ຫວ່າງ</span><span class="en">Checks that port 3020 is free</span></li>
+        <li><span class="lo"><code>npm install</code> (ຖ້າຍັງບໍ່ມີ <code>node_modules</code>) ແລະ <code>npm run build</code></span><span class="en"><code>npm install</code> (if <code>node_modules</code> is missing) and <code>npm run build</code></span></li>
+        <li><span class="lo">ດາວໂຫຼດ WinSW (ໂປຣແກຣມທີ່ເຮັດໃຫ້ Node.js ເຮັດວຽກເປັນ service) ໄປໄວ້ທີ່ <code>service\PrintClient.exe</code></span><span class="en">Downloads WinSW (the tool that runs Node.js as a service) to <code>service\PrintClient.exe</code></span></li>
+        <li><span class="lo">ຕິດຕັ້ງ ແລະ ເລີ່ມ service ດ້ວຍບັນຊີ SYSTEM, ແລ້ວກວດວ່າ Dashboard ຕອບກັບ</span><span class="en">Installs and starts the service as SYSTEM, then checks that the dashboard answers</span></li>
+      </ol>
+      <div class="tip">
+        <span class="lo"><strong>ອັບເດດໂປຣແກຣມ:</strong> ຫຼັງຈາກປ່ຽນໂຄດ ໃຫ້ກົດ <code>install-service.bat</code> ອີກຄັ້ງ — ມັນຈະ build ແລະ ຕິດຕັ້ງໃໝ່ໃຫ້.</span>
+        <span class="en"><strong>Updating:</strong> after the code changes, run <code>install-service.bat</code> again — it rebuilds and reinstalls.</span>
+      </div>
+    </section>
+
+    <section id="winsw">
+      <h2><span class="lo">ຕິດຕັ້ງ WinSW</span><span class="en">Install WinSW</span></h2>
+      <p class="lo">WinSW (Windows Service Wrapper) ແມ່ນໂປຣແກຣມ open-source ຂະໜາດນ້ອຍທີ່ເຮັດໃຫ້ Node.js ເຮັດວຽກເປັນ Windows service ໄດ້. ມັນເລີ່ມ Print Client ເມື່ອເປີດຄອມ, ເລີ່ມໃໝ່ເມື່ອມັນຢຸດ ແລະ ບັນທຶກ log.</p>
+      <p class="en">WinSW (Windows Service Wrapper) is a small open-source tool that lets Node.js run as a Windows service. It starts Print Client with Windows, restarts it if it stops, and writes the log files.</p>
+      <table>
+        <tbody>
+          <tr><td><span class="lo">ເວີຊັນ</span><span class="en inline"> Version</span></td><td><strong>2.12.0</strong> <span class="lo">(ເວີຊັນ stable ລ່າສຸດ)</span><span class="en inline">(latest stable)</span></td></tr>
+          <tr><td><span class="lo">ໄຟລ໌</span><span class="en inline"> File</span></td><td><code>WinSW.NET461.exe</code> (≈ 640 KB)</td></tr>
+          <tr><td><span class="lo">ຕ້ອງການ</span><span class="en inline"> Needs</span></td><td><span class="lo">.NET Framework 4.6.1 ຂຶ້ນໄປ — ມີຢູ່ແລ້ວໃນ Windows 10 ແລະ 11</span><span class="en">.NET Framework 4.6.1 or newer — already part of Windows 10 and 11</span></td></tr>
+          <tr><td><span class="lo">ບ່ອນເກັບ</span><span class="en inline"> Location</span></td><td><code>D:\sambaPOS\print_client\service\PrintClient.exe</code></td></tr>
+          <tr><td><span class="lo">ດາວໂຫຼດ</span><span class="en inline"> Download</span></td><td><a href="https://github.com/winsw/winsw/releases/download/v2.12.0/WinSW.NET461.exe">github.com/winsw/winsw/releases/download/v2.12.0/WinSW.NET461.exe</a></td></tr>
+        </tbody>
+      </table>
+      <div class="warn">
+        <span class="lo">ຢ່າໃຊ້ເວີຊັນ 3.0 (alpha) — ມັນເປັນເວີຊັນທົດລອງ ແລະ ໃຊ້ຮູບແບບການຕັ້ງຄ່າຕ່າງກັນ.</span>
+        <span class="en">Don't use version 3.0 (alpha) — it's a test version and uses a different config format.</span>
+      </div>
+
+      <h3><span class="lo">ແບບອັດຕະໂນມັດ (ແນະນຳ)</span><span class="en">Automatic (recommended)</span></h3>
+      <p class="lo">ບໍ່ຕ້ອງເຮັດຫຍັງ: <code>install-service.bat</code> ຈະດາວໂຫຼດ WinSW ໃຫ້ເອງ ຖ້າຍັງບໍ່ມີ <code>service\PrintClient.exe</code>. ຖ້າມີແລ້ວ ມັນຈະໃຊ້ໄຟລ໌ເດີມ ບໍ່ດາວໂຫຼດໃໝ່.</p>
+      <p class="en">Nothing to do: <code>install-service.bat</code> downloads WinSW by itself when <code>service\PrintClient.exe</code> is missing. If the file is already there, it reuses it.</p>
+
+      <h3><span class="lo">ແບບດ້ວຍມື (ຄອມບໍ່ມີອິນເຕີເນັດ ຫຼື ດາວໂຫຼດບໍ່ໄດ້)</span><span class="en">Manually (no internet, or the download failed)</span></h3>
+      <ol class="steps">
+        <li><span class="lo">ໃນຄອມທີ່ມີອິນເຕີເນັດ ດາວໂຫຼດ <a href="https://github.com/winsw/winsw/releases/download/v2.12.0/WinSW.NET461.exe">WinSW.NET461.exe</a> (ຫຼື ເຂົ້າ <a href="https://github.com/winsw/winsw/releases/tag/v2.12.0">ໜ້າ release v2.12.0</a> ແລ້ວເລືອກ <code>WinSW.NET461.exe</code>).</span><span class="en">On a computer with internet, download <a href="https://github.com/winsw/winsw/releases/download/v2.12.0/WinSW.NET461.exe">WinSW.NET461.exe</a> (or open the <a href="https://github.com/winsw/winsw/releases/tag/v2.12.0">v2.12.0 release page</a> and pick <code>WinSW.NET461.exe</code>).</span></li>
+        <li><span class="lo">ສ້າງໂຟນເດີ <code>service</code> ໃນ <code>D:\sambaPOS\print_client</code> (ຖ້າຍັງບໍ່ມີ).</span><span class="en">Create a <code>service</code> folder in <code>D:\sambaPOS\print_client</code> if it doesn't exist.</span></li>
+        <li><span class="lo">ສຳເນົາໄຟລ໌ໄປໄວ້ໃນໂຟນເດີນັ້ນ ແລະ <strong>ປ່ຽນຊື່ເປັນ <code>PrintClient.exe</code></strong>. ຊື່ຕ້ອງກົງກັບ id ຂອງ service.</span><span class="en">Copy the file into that folder and <strong>rename it to <code>PrintClient.exe</code></strong>. The name must match the service id.</span></li>
+        <li><span class="lo">ກົດຂວາທີ່ <code>PrintClient.exe</code> → <strong>Properties</strong> → ຖ້າມີ <strong>Unblock</strong> ຢູ່ລຸ່ມສຸດ ໃຫ້ໝາຍ ແລ້ວກົດ <strong>OK</strong> (Windows ບລັອກໄຟລ໌ທີ່ດາວໂຫຼດມາ).</span><span class="en">Right-click <code>PrintClient.exe</code> → <strong>Properties</strong> → if <strong>Unblock</strong> appears at the bottom, tick it and click <strong>OK</strong> (Windows blocks downloaded files).</span></li>
+        <li><span class="lo">ກົດ <code>install-service.bat</code>. ມັນຈະຂ້າມການດາວໂຫຼດ, ສ້າງ <code>PrintClient.xml</code> ແລະ ຕິດຕັ້ງ service.</span><span class="en">Run <code>install-service.bat</code>. It skips the download, writes <code>PrintClient.xml</code> and installs the service.</span></li>
+      </ol>
+
+      <h3><span class="lo">ກວດເວີຊັນ ແລະ ສະຖານະ</span><span class="en">Check the version and status</span></h3>
+      <pre><code>cd /d D:\sambaPOS\print_client
+service\PrintClient.exe version
+service\PrintClient.exe status</code></pre>
+      <p class="lo">ຜົນທີ່ຖືກຕ້ອງ: <code>WinSW 2.12.0.0</code> ແລະ <code>Started</code>. ຖ້າເຫັນ <code>NonExistent</code> ແມ່ນ service ຍັງບໍ່ໄດ້ຕິດຕັ້ງ; <code>Stopped</code> ແມ່ນຕິດຕັ້ງແລ້ວແຕ່ຢຸດຢູ່.</p>
+      <p class="en">Expected: <code>WinSW 2.12.0.0</code> and <code>Started</code>. <code>NonExistent</code> means the service isn't installed; <code>Stopped</code> means it's installed but not running.</p>
+      <p class="lo">ກວດ .NET Framework:</p>
+      <p class="en">Check .NET Framework:</p>
+      <pre><code>reg query "HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" /v Release</code></pre>
+      <p class="lo">ຄ່າ Release ສະແດງເປັນເລກຖານສິບຫົກ ແລະ ຕ້ອງ <code>0x6040e</code> ຂຶ້ນໄປ (= 4.6.1). ຕົວຢ່າງ: ຄອມເຄື່ອງນີ້ສະແດງ <code>0x82405</code> = .NET 4.8.1 ✓</p>
+      <p class="en">Release is shown in hex and must be <code>0x6040e</code> or higher (= 4.6.1). For example, this computer shows <code>0x82405</code> = .NET 4.8.1 ✓</p>
+
+      <h3><span class="lo">ຄຳສັ່ງ WinSW</span><span class="en">WinSW commands</span></h3>
+      <p class="lo">ຄຳສັ່ງທີ່ປ່ຽນ service ຕ້ອງເປີດ Command Prompt ແບບ <strong>Run as administrator</strong>.</p>
+      <p class="en">Commands that change the service need Command Prompt opened with <strong>Run as administrator</strong>.</p>
+      <table>
+        <thead><tr><th><span class="lo">ຄຳສັ່ງ</span><span class="en inline"> Command</span></th><th><span class="lo">ຄວາມໝາຍ</span><span class="en inline"> Meaning</span></th></tr></thead>
+        <tbody>
+          <tr><td><code>PrintClient.exe install</code></td><td><span class="lo">ລົງທະບຽນ service ໃນ Windows</span><span class="en">Register the service with Windows</span></td></tr>
+          <tr><td><code>PrintClient.exe uninstall</code></td><td><span class="lo">ລຶບ service ອອກ</span><span class="en">Remove the service</span></td></tr>
+          <tr><td><code>PrintClient.exe start</code></td><td><span class="lo">ເລີ່ມ service</span><span class="en">Start the service</span></td></tr>
+          <tr><td><code>PrintClient.exe stop</code></td><td><span class="lo">ຢຸດ service</span><span class="en">Stop the service</span></td></tr>
+          <tr><td><code>PrintClient.exe stopwait</code></td><td><span class="lo">ຢຸດ ແລະ ລໍຖ້າຈົນຢຸດແທ້</span><span class="en">Stop and wait until it has really stopped</span></td></tr>
+          <tr><td><code>PrintClient.exe restart</code></td><td><span class="lo">ເລີ່ມໃໝ່ (ໃຊ້ຫຼັງແກ້ໄຂ .env)</span><span class="en">Restart (use after editing .env)</span></td></tr>
+          <tr><td><code>PrintClient.exe status</code></td><td><span class="lo">ສະຖານະ: Started / Stopped / NonExistent</span><span class="en">Status: Started / Stopped / NonExistent</span></td></tr>
+          <tr><td><code>PrintClient.exe version</code></td><td><span class="lo">ເວີຊັນ WinSW</span><span class="en">WinSW version</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3><span class="lo">ໄຟລ໌ຕັ້ງຄ່າ PrintClient.xml</span><span class="en">The PrintClient.xml config file</span></h3>
+      <p class="lo">WinSW ອ່ານ <code>service\PrintClient.xml</code> (ຊື່ດຽວກັບ .exe). <code>install-service.bat</code> ສ້າງໄຟລ໌ນີ້ໃໝ່ທຸກຄັ້ງ — ບໍ່ຕ້ອງແກ້ໄຂເອງ. ເນື້ອໃນໃນເຄື່ອງນີ້:</p>
+      <p class="en">WinSW reads <code>service\PrintClient.xml</code> (same name as the .exe). <code>install-service.bat</code> rewrites it every time — no need to edit it. On this computer it contains:</p>
+      <pre><code>&lt;service&gt;
+  &lt;id&gt;PrintClient&lt;/id&gt;
+  &lt;name&gt;Print Client&lt;/name&gt;
+  &lt;description&gt;Receives print jobs from Print Service and sends them to the shop printers.&lt;/description&gt;
+  &lt;executable&gt;C:\Program Files\nodejs\node.exe&lt;/executable&gt;
+  &lt;arguments&gt;--env-file-if-exists=.env --disable-warning=ExperimentalWarning dist\server.js&lt;/arguments&gt;
+  &lt;workingdirectory&gt;D:\sambaPOS\print_client&lt;/workingdirectory&gt;
+  &lt;startmode&gt;Automatic&lt;/startmode&gt;
+  &lt;stoptimeout&gt;15 sec&lt;/stoptimeout&gt;
+  &lt;onfailure action="restart" delay="10 sec"/&gt;
+  &lt;resetfailure&gt;1 hour&lt;/resetfailure&gt;
+  &lt;logpath&gt;D:\sambaPOS\print_client\service\logs&lt;/logpath&gt;
+  &lt;log mode="roll-by-size"&gt;
+    &lt;sizeThreshold&gt;10240&lt;/sizeThreshold&gt;
+    &lt;keepFiles&gt;5&lt;/keepFiles&gt;
+  &lt;/log&gt;
+&lt;/service&gt;</code></pre>
+      <ul>
+        <li><code>startmode Automatic</code> — <span class="lo">ເລີ່ມເອງເມື່ອເປີດຄອມ</span><span class="en inline">starts with Windows</span></li>
+        <li><code>onfailure restart 10 sec</code> — <span class="lo">ເລີ່ມໃໝ່ພາຍໃນ 10 ວິນາທີ ຖ້າຢຸດເອງ</span><span class="en inline">restarts within 10 seconds if it stops</span></li>
+        <li><code>log roll-by-size</code> — <span class="lo">log ໄຟລ໌ລະ 10 MB, ເກັບ 5 ໄຟລ໌</span><span class="en inline">10 MB log files, 5 kept</span></li>
+      </ul>
+
+      <h3><span class="lo">ອັບເດດ WinSW</span><span class="en">Updating WinSW</span></h3>
+      <ol class="steps">
+        <li><span class="lo">ກົດ <code>uninstall-service.bat</code> ແລະ ຕອບ <kbd>N</kbd> (ບໍ່ລຶບໂຟນເດີ).</span><span class="en">Run <code>uninstall-service.bat</code> and answer <kbd>N</kbd> (keep the folder).</span></li>
+        <li><span class="lo">ແທນ <code>service\PrintClient.exe</code> ດ້ວຍໄຟລ໌ໃໝ່ (ປ່ຽນຊື່ເປັນ <code>PrintClient.exe</code>), ຫຼື ລຶບມັນອອກເພື່ອໃຫ້ຕົວຕິດຕັ້ງດາວໂຫຼດ 2.12.0 ໃໝ່.</span><span class="en">Replace <code>service\PrintClient.exe</code> with the new file (renamed to <code>PrintClient.exe</code>), or delete it so the installer downloads 2.12.0 again.</span></li>
+        <li><span class="lo">ກົດ <code>install-service.bat</code>.</span><span class="en">Run <code>install-service.bat</code>.</span></li>
+      </ol>
+    </section>
+
+    <section id="portal">
+      <h2><span class="lo">ຕັ້ງຄ່າເຄື່ອງພິມໃນ Portal</span><span class="en">Set up the printer in the portal</span></h2>
+      <p class="lo">ລາຍຊື່ເຄື່ອງພິມມາຈາກ Print Service Portal. ສຳລັບເຄື່ອງພິມ Casheer ໃຫ້ຕັ້ງແບບນີ້:</p>
+      <p class="en">The printer list comes from the Print Service portal. For the Casheer printer use:</p>
+      <table>
+        <thead><tr><th><span class="lo">ຊ່ອງ</span><span class="en inline"> Field</span></th><th><span class="lo">ຄ່າ</span><span class="en inline"> Value</span></th></tr></thead>
+        <tbody>
+          <tr><td>Driver</td><td>Windows shared printer</td></tr>
+          <tr><td>Address</td><td><code>\\localhost\POS2026</code></td></tr>
+          <tr><td>Windows agent URL</td><td><span class="lo">ປ່ອຍວ່າງ</span><span class="en inline"> Leave empty</span></td></tr>
+          <tr><td>Active</td><td><span class="lo">ເປີດ</span><span class="en inline"> On</span></td></tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <span class="lo">ໃຊ້ <code>localhost</code> ແທນ IP (ເຊັ່ນ <code>\\192.168.100.86\POS2026</code>) ເພາະຖ້າ IP ຂອງຄອມປ່ຽນ ທີ່ຢູ່ແບບ IP ຈະໃຊ້ບໍ່ໄດ້.</span>
+        <span class="en">Use <code>localhost</code> rather than the IP (e.g. <code>\\192.168.100.86\POS2026</code>): if the computer's IP changes, the IP address stops working.</span>
+      </div>
+      <div class="warn">
+        <span class="lo">ຖ້າໃສ່ <strong>Windows agent URL</strong> ໄວ້ Print Client ຈະສົ່ງງານໄປຫາ agent ນັ້ນແທນການພິມໂດຍກົງ. ຖ້າເຄື່ອງພິມຢູ່ໃນຄອມເຄື່ອງນີ້ ໃຫ້ປ່ອຍວ່າງ.</span>
+        <span class="en">If <strong>Windows agent URL</strong> is filled in, Print Client sends jobs to that agent instead of printing directly. Leave it empty when the printer is on this computer.</span>
+      </div>
+      <p class="lo">ຫຼັງຈາກບັນທຶກໃນ Portal ກົດ <strong>Check now</strong> ໃນ Dashboard ເພື່ອໂຫຼດລາຍຊື່ໃໝ່ທັນທີ.</p>
+      <p class="en">After saving in the portal, press <strong>Check now</strong> on the dashboard to reload the list straight away.</p>
+    </section>
+
+    <section id="dashboard">
+      <h2><span class="lo">ໜ້າ Dashboard</span><span class="en">Dashboard</span></h2>
+      <p class="lo">ເປີດ <a href="http://localhost:3020">http://localhost:3020</a> ໃນ browser.</p>
+      <p class="en">Open <a href="http://localhost:3020">http://localhost:3020</a> in a browser.</p>
+      <table>
+        <thead><tr><th><span class="lo">ສ່ວນ</span><span class="en inline"> Part</span></th><th><span class="lo">ໃຊ້ເຮັດຫຍັງ</span><span class="en inline"> What it's for</span></th></tr></thead>
+        <tbody>
+          <tr><td><strong>Logs</strong></td><td><span class="lo">ເບິ່ງບັນທຶກລະບົບ: ການເຊື່ອມຕໍ່, ເຄື່ອງພິມ online/offline, ງານທີ່ພິມ/ລົ້ມເຫຼວ. ກອງ All / Warnings / Errors ແລະ <strong>Download</strong> ເປັນໄຟລ໌ .txt</span><span class="en">System log: connection, printers going online/offline, jobs printed or failed. Filter All / Warnings / Errors and <strong>Download</strong> as a .txt file</span></td></tr>
+          <tr><td><span class="lo">ສະຖິຕິ</span><span class="en inline"> Stats</span></td><td><span class="lo">ຈຳນວນງານໃນຄິວ, ກຳລັງລອງໃໝ່, ພິມແລ້ວ (24 ຊົ່ວໂມງ), ລົ້ມເຫຼວ</span><span class="en">Jobs in queue, retrying, printed (24 hours), failed</span></td></tr>
+          <tr><td>Printers</td><td><span class="lo">ສະຖານະແຕ່ລະເຄື່ອງ (ກວດທຸກ 30 ວິນາທີ). <strong>Check now</strong> = ກວດທັນທີ</span><span class="en">Each printer's status (checked every 30 seconds). <strong>Check now</strong> checks immediately</span></td></tr>
+          <tr><td>Print queue</td><td><span class="lo">ລາຍການງານ. <strong>View</strong> = ເບິ່ງເນື້ອໃນ, <strong>Retry</strong> = ພິມໃໝ່, <strong>Clear failed</strong> = ລຶບງານທີ່ລົ້ມເຫຼວ</span><span class="en">Job list. <strong>View</strong> shows the content, <strong>Retry</strong> prints again, <strong>Clear failed</strong> removes failed jobs</span></td></tr>
+          <tr><td>Connection</td><td><span class="lo">ສະຖານະການເຊື່ອມຕໍ່ກັບ Print Service ແລະ ຊື່ຮ້ານ</span><span class="en">Link to Print Service and the shop name</span></td></tr>
+          <tr><td>Shop pairing</td><td><span class="lo">ໃສ່ລະຫັດຈັບຄູ່ຮ້ານ ແລ້ວກົດ <strong>Save and connect</strong></span><span class="en">Enter the shop pairing code and press <strong>Save and connect</strong></span></td></tr>
+        </tbody>
+      </table>
+      <h3><span class="lo">ການລອງພິມໃໝ່ອັດຕະໂນມັດ</span><span class="en">Automatic retries</span></h3>
+      <p class="lo">ຖ້າພິມບໍ່ສຳເລັດ ງານຈະລອງໃໝ່ເອງ: ລໍຖ້າ 10 ວິນາທີ ແລ້ວເພີ່ມເປັນສອງເທົ່າແຕ່ລະຄັ້ງ ສູງສຸດ 5 ນາທີ, ລອງໄດ້ສູງສຸດ 10 ຄັ້ງ. ເມື່ອເຄື່ອງພິມກັບມາ online ງານທີ່ລໍຖ້າຈະພິມທັນທີ. ຫຼັງ 10 ຄັ້ງ ງານຈະເປັນ <strong>Failed</strong> — ກົດ <strong>Retry</strong> ເພື່ອພິມໃໝ່.</p>
+      <p class="en">A failed job retries on its own: first after 10 seconds, doubling each time up to 5 minutes, at most 10 attempts. When the printer comes back online, waiting jobs print immediately. After 10 attempts the job is <strong>Failed</strong> — press <strong>Retry</strong> to print it again.</p>
+    </section>
+
+    <section id="manage">
+      <h2><span class="lo">ຈັດການ Service</span><span class="en">Manage the service</span></h2>
+      <h3><span class="lo">ຜ່ານໜ້າຈໍ Services</span><span class="en">With the Services window</span></h3>
+      <p class="lo">ກົດ <kbd>Win</kbd>+<kbd>R</kbd> → ພິມ <code>services.msc</code> → ຊອກ <strong>Print Client</strong> → ກົດຂວາ ເລືອກ Start / Stop / Restart.</p>
+      <p class="en">Press <kbd>Win</kbd>+<kbd>R</kbd> → type <code>services.msc</code> → find <strong>Print Client</strong> → right-click for Start / Stop / Restart.</p>
+
+      <h3><span class="lo">ຜ່ານ Command Prompt (Run as administrator)</span><span class="en">From Command Prompt (Run as administrator)</span></h3>
+      <pre><code>cd /d D:\sambaPOS\print_client
+service\PrintClient.exe status
+service\PrintClient.exe restart
+service\PrintClient.exe stop
+service\PrintClient.exe start</code></pre>
+
+      <h3><span class="lo">ເມື່ອແກ້ໄຂ .env</span><span class="en">After editing .env</span></h3>
+      <p class="lo">ຕ້ອງ <strong>Restart</strong> service ເພື່ອໃຫ້ຄ່າໃໝ່ມີຜົນ.</p>
+      <p class="en"><strong>Restart</strong> the service for new values to take effect.</p>
+
+      <h3><span class="lo">ໄຟລ໌ Log</span><span class="en">Log files</span></h3>
+      <ul>
+        <li><span class="lo">ປຸ່ມ <strong>Logs</strong> ໃນ Dashboard — ເກັບ 1000 ແຖວລ່າສຸດໃນໜ່ວຍຄວາມຈຳ, ເລີ່ມໃໝ່ທຸກຄັ້ງທີ່ service restart</span><span class="en"><strong>Logs</strong> button on the dashboard — last 1000 entries in memory, cleared when the service restarts</span></li>
+        <li><code>service\logs\PrintClient.out.log</code> — <span class="lo">ຂໍ້ຄວາມທັງໝົດຂອງ Print Client (ເກັບໄວ້ຫຼັງ restart)</span><span class="en inline">everything Print Client prints (kept across restarts)</span></li>
+        <li><code>service\logs\PrintClient.err.log</code> — <span class="lo">ຂໍ້ຜິດພາດ</span><span class="en inline">errors</span></li>
+        <li><code>service\logs\PrintClient.wrapper.log</code> — <span class="lo">ການເລີ່ມ/ຢຸດ service</span><span class="en inline">service start and stop</span></li>
+      </ul>
+      <p class="lo">ແຕ່ລະໄຟລ໌ໃຫຍ່ສຸດ 10 MB ແລະ ເກັບໄວ້ 5 ໄຟລ໌.</p>
+      <p class="en">Each file rolls over at 10 MB and the last 5 are kept.</p>
+
+      <h3><span class="lo">ຂໍ້ມູນ</span><span class="en">Data</span></h3>
+      <p class="lo">ງານພິມ ແລະ ການຕັ້ງຄ່າ (ລວມທັງລະຫັດຈັບຄູ່) ເກັບໄວ້ໃນ <code>data\print-client.db</code>.</p>
+      <p class="en">Jobs and settings (including the pairing code) are stored in <code>data\print-client.db</code>.</p>
+    </section>
+
+    <section id="uninstall">
+      <h2><span class="lo">ຖອນການຕິດຕັ້ງ</span><span class="en">Uninstall</span></h2>
+      <ol class="steps">
+        <li><span class="lo">ກົດສອງເທື່ອທີ່ <code>uninstall-service.bat</code> ແລະ ກົດ <strong>Yes</strong> ສຳລັບສິດ Administrator.</span><span class="en">Double-click <code>uninstall-service.bat</code> and click <strong>Yes</strong> for administrator rights.</span></li>
+        <li><span class="lo">ມັນຈະຢຸດ ແລະ ລຶບ service ອອກ.</span><span class="en">It stops and removes the service.</span></li>
+        <li><span class="lo">ມັນຈະຖາມວ່າຈະລຶບໂຟນເດີ <code>service</code> (WinSW ແລະ log) ບໍ: ກົດ <kbd>Y</kbd> ຫຼື <kbd>N</kbd>.</span><span class="en">It asks whether to delete the <code>service</code> folder (WinSW and its logs): press <kbd>Y</kbd> or <kbd>N</kbd>.</span></li>
+      </ol>
+      <p class="lo">ໂຟນເດີ <code>data</code> (ງານພິມ ແລະ ການຕັ້ງຄ່າ) ຈະບໍ່ຖືກລຶບ.</p>
+      <p class="en">The <code>data</code> folder (jobs and settings) is always kept.</p>
+      <div class="note">
+        <span class="lo">ຖ້າເຫັນ "marked for deletion" ໃຫ້ປິດໜ້າຈໍ Services ຫຼື restart ຄອມ.</span>
+        <span class="en">If it says "marked for deletion", close the Services window or restart the computer.</span>
+      </div>
+    </section>
+
+    <section id="settings">
+      <h2><span class="lo">ການຕັ້ງຄ່າ (.env)</span><span class="en">Settings (.env)</span></h2>
+      <p class="lo">ແກ້ໄຂໄຟລ໌ <code>.env</code> ໃນໂຟນເດີໂປຣແກຣມ ແລ້ວ <strong>Restart</strong> service.</p>
+      <p class="en">Edit <code>.env</code> in the program folder, then <strong>restart</strong> the service.</p>
+      <table>
+        <thead><tr><th><span class="lo">ຊື່</span><span class="en inline"> Name</span></th><th><span class="lo">ຄ່າປັດຈຸບັນ</span><span class="en inline"> Current</span></th><th><span class="lo">ຄວາມໝາຍ</span><span class="en inline"> Meaning</span></th></tr></thead>
+        <tbody>
+          <tr><td><code>PORT</code></td><td>3020</td><td><span class="lo">Port ຂອງ Dashboard</span><span class="en">Dashboard port</span></td></tr>
+          <tr><td><code>PRINT_SERVICE_URL</code></td><td>https://printer.inthida.com</td><td><span class="lo">ທີ່ຢູ່ Print Service</span><span class="en">Print Service address</span></td></tr>
+          <tr><td><code>PRINT_CLIENT_DATA_DIR</code></td><td>./data</td><td><span class="lo">ໂຟນເດີເກັບຖານຂໍ້ມູນ</span><span class="en">Database folder</span></td></tr>
+          <tr><td><code>PRINT_SHOP_CODE</code></td><td>—</td><td><span class="lo">ລະຫັດຈັບຄູ່ເລີ່ມຕົ້ນ (ລະຫັດທີ່ບັນທຶກໃນ Dashboard ມີຄວາມສຳຄັນກວ່າ)</span><span class="en">Initial pairing code (a code saved on the dashboard wins)</span></td></tr>
+          <tr><td><code>WINDOWS_PRINT_AGENT_URL</code></td><td>https://printer.inthida.com</td><td><span class="lo">Agent ສຳລັບເຄື່ອງພິມ Windows ທີ່ບໍ່ມີ agent URL — <strong>ບໍ່ໃຊ້</strong> ເມື່ອ Print Client ເຮັດວຽກໃນ Windows</span><span class="en">Agent for Windows printers without their own agent URL — <strong>not used</strong> when Print Client runs on Windows</span></td></tr>
+          <tr><td><code>PRINT_HISTORY_LIMIT</code></td><td>1000</td><td><span class="lo">ຈຳນວນງານສູງສຸດທີ່ເກັບໄວ້</span><span class="en">Most jobs kept in the database</span></td></tr>
+          <tr><td><code>PRINT_LIST_LIMIT</code></td><td>300</td><td><span class="lo">ຈຳນວນງານທີ່ສະແດງໃນ Dashboard</span><span class="en">Jobs shown on the dashboard</span></td></tr>
+          <tr><td><code>PRINT_PRINTED_RETENTION_DAYS</code></td><td>7</td><td><span class="lo">ເກັບງານທີ່ພິມແລ້ວໄວ້ຈັກມື້</span><span class="en">Days to keep printed jobs</span></td></tr>
+          <tr><td><code>PRINTER_CHECK_INTERVAL_MS</code></td><td>30000</td><td><span class="lo">ກວດສະຖານະເຄື່ອງພິມທຸກໆ (ms)</span><span class="en">How often printers are checked (ms)</span></td></tr>
+          <tr><td><code>PRINTER_CHECK_TIMEOUT_MS</code></td><td>3000</td><td><span class="lo">ເວລາລໍຖ້າການກວດ (ms)</span><span class="en">Printer check timeout (ms)</span></td></tr>
+          <tr><td><code>PRINTER_TIMEOUT_MS</code></td><td>10000</td><td><span class="lo">ເວລາລໍຖ້າການພິມແຕ່ລະງານ (ms)</span><span class="en">Timeout for sending one job (ms)</span></td></tr>
+          <tr><td><code>PRINT_ACK_TIMEOUT_MS</code></td><td>10000</td><td><span class="lo">ເວລາລໍຖ້າ Print Service ຢືນຢັນ (ms)</span><span class="en">Wait for Print Service to confirm a result (ms)</span></td></tr>
+          <tr><td><code>PRINT_RETRY_MAX_ATTEMPTS</code></td><td>10</td><td><span class="lo">ລອງໃໝ່ສູງສຸດຈັກຄັ້ງ (0 = ລອງຈົນກວ່າຈະພິມໄດ້)</span><span class="en">Most attempts per job (0 = retry until printed)</span></td></tr>
+          <tr><td><code>PRINT_RETRY_BASE_DELAY_MS</code></td><td>10000</td><td><span class="lo">ເວລາລໍຖ້າກ່ອນລອງໃໝ່ຄັ້ງທຳອິດ (ms)</span><span class="en">Delay before the first retry (ms)</span></td></tr>
+          <tr><td><code>PRINT_RETRY_MAX_DELAY_MS</code></td><td>300000</td><td><span class="lo">ເວລາລໍຖ້າສູງສຸດລະຫວ່າງການລອງ (ms)</span><span class="en">Longest delay between retries (ms)</span></td></tr>
+          <tr><td><code>PRINT_CUT_FEED_LINES</code></td><td>6 <span class="lo">(ຄ່າເລີ່ມຕົ້ນ)</span><span class="en inline">(default)</span></td><td><span class="lo">ຈຳນວນແຖວເລື່ອນເຈ້ຍກ່ອນຕັດ — ເພີ່ມຖ້າແຖວສຸດທ້າຍຖືກຕັດ</span><span class="en">Lines fed before cutting — raise it if the last lines get cut off</span></td></tr>
+          <tr><td><code>PRINT_CUT_MODE</code></td><td>full <span class="lo">(ຄ່າເລີ່ມຕົ້ນ)</span><span class="en inline">(default)</span></td><td><span class="lo"><code>partial</code> = ຕັດບໍ່ຂາດ</span><span class="en"><code>partial</code> = partial cut</span></td></tr>
+          <tr><td><code>SYSTEM_LOG_LIMIT</code></td><td>1000 <span class="lo">(ຄ່າເລີ່ມຕົ້ນ)</span><span class="en inline">(default)</span></td><td><span class="lo">ຈຳນວນແຖວໃນປຸ່ມ Logs</span><span class="en">Entries kept for the Logs button</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="troubleshooting">
+      <h2><span class="lo">ແກ້ໄຂບັນຫາ</span><span class="en">Troubleshooting</span></h2>
+      <p class="lo">ເລີ່ມຈາກກົດປຸ່ມ <strong>Logs</strong> ໃນ Dashboard ເພື່ອເບິ່ງຂໍ້ຄວາມຜິດພາດ.</p>
+      <p class="en">Start by opening <strong>Logs</strong> on the dashboard to see the error message.</p>
+
+      <details>
+        <summary><span class="lo">ເຄື່ອງພິມ Offline: "Windows share host … is not reachable"</span><span class="en inline"> · Printer offline: "Windows share host … is not reachable"</span></summary>
+        <div>
+          <ul>
+            <li><span class="lo">ກວດວ່າ service <strong>Server</strong> (LanmanServer) ເຮັດວຽກຢູ່ ໃນ <code>services.msc</code>.</span><span class="en">Check the <strong>Server</strong> service (LanmanServer) is running in <code>services.msc</code>.</span></li>
+            <li><span class="lo">ກວດທີ່ຢູ່ໃນ Portal: ຄວນເປັນ <code>\\localhost\POS2026</code>.</span><span class="en">Check the portal address: it should be <code>\\localhost\POS2026</code>.</span></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">"The network name cannot be found"</span><span class="en inline"> · "The network name cannot be found"</span></summary>
+        <div>
+          <p class="lo">ຊື່ share ບໍ່ຖືກ ຫຼື ເຄື່ອງພິມບໍ່ໄດ້ແບ່ງປັນ. ກວດດ້ວຍ <code>net view \\localhost</code> ແລະ ເບິ່ງ <a href="#share">ແບ່ງປັນເຄື່ອງພິມ</a>.</p>
+          <p class="en">The share name is wrong or the printer isn't shared. Check with <code>net view \\localhost</code> and see <a href="#share">Share the printer</a>.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">"Access is denied" ເມື່ອພິມ</span><span class="en inline"> · "Access is denied" when printing</span></summary>
+        <div>
+          <ol>
+            <li><span class="lo">Printer properties → ແຖບ <strong>Security</strong> → ໃຫ້ <strong>Everyone</strong> ມີສິດ <strong>Print</strong>.</span><span class="en">Printer properties → <strong>Security</strong> tab → give <strong>Everyone</strong> the <strong>Print</strong> permission.</span></li>
+            <li><span class="lo">ຫຼື ໃຫ້ service ເຮັດວຽກດ້ວຍບັນຊີຜູ້ໃຊ້: <code>services.msc</code> → <strong>Print Client</strong> → Properties → ແຖບ <strong>Log On</strong> → <strong>This account</strong> → ໃສ່ <code>.\ຊື່ຜູ້ໃຊ້</code> ແລະ ລະຫັດຜ່ານ → OK → Restart.</span><span class="en">Or run the service as a user: <code>services.msc</code> → <strong>Print Client</strong> → Properties → <strong>Log On</strong> tab → <strong>This account</strong> → enter <code>.\username</code> and password → OK → Restart.</span></li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">ຕົວຕິດຕັ້ງບອກ "Port 3020 is already in use"</span><span class="en inline"> · Installer says "Port 3020 is already in use"</span></summary>
+        <div>
+          <p class="lo">ມີ Print Client ອີກໂຕເປີດຢູ່ (ໜ້າຕ່າງ <code>npm start</code> / <code>npm run dev</code>). ປິດມັນແລ້ວລອງໃໝ່. ກວດວ່າໂປຣແກຣມໃດໃຊ້ port:</p>
+          <p class="en">Another Print Client is running (an <code>npm start</code> / <code>npm run dev</code> window). Close it and try again. To see what uses the port:</p>
+          <pre><code>netstat -ano | findstr :3020</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">ຕົວຕິດຕັ້ງບອກ "Node.js was not found" ຫຼື "Download failed"</span><span class="en inline"> · Installer says "Node.js was not found" or "Download failed"</span></summary>
+        <div>
+          <ul>
+            <li><span class="lo">ຕິດຕັ້ງ Node.js 22+ ຈາກ <a href="https://nodejs.org">nodejs.org</a> ແລ້ວລອງໃໝ່.</span><span class="en">Install Node.js 22+ from <a href="https://nodejs.org">nodejs.org</a> and try again.</span></li>
+            <li><span class="lo">ຖ້າດາວໂຫຼດ WinSW ບໍ່ໄດ້: ເບິ່ງ <a href="#winsw">ຕິດຕັ້ງ WinSW ແບບດ້ວຍມື</a>.</span><span class="en">If WinSW can't be downloaded: see <a href="#winsw">Install WinSW manually</a>.</span></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">Dashboard ບອກ "Print Client unreachable" ຫຼື ເປີດບໍ່ໄດ້</span><span class="en inline"> · Dashboard says "Print Client unreachable" or won't open</span></summary>
+        <div>
+          <p class="lo">Service ຢຸດຢູ່. ເປີດ <code>services.msc</code> ແລ້ວ Start <strong>Print Client</strong>, ຫຼື ເບິ່ງ <code>service\logs\PrintClient.err.log</code>.</p>
+          <p class="en">The service is stopped. Start <strong>Print Client</strong> in <code>services.msc</code>, or read <code>service\logs\PrintClient.err.log</code>.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">Connection Offline: "Cannot connect to Print Service"</span><span class="en inline"> · Connection offline: "Cannot connect to Print Service"</span></summary>
+        <div>
+          <ul>
+            <li><span class="lo">ກວດອິນເຕີເນັດ ແລະ ເປີດ <code>https://printer.inthida.com</code> ໃນ browser.</span><span class="en">Check the internet and open <code>https://printer.inthida.com</code> in a browser.</span></li>
+            <li><span class="lo">ກວດລະຫັດຈັບຄູ່ໃນ <strong>Shop pairing</strong> ກັບໜ້າ Shops ໃນ Portal.</span><span class="en">Compare the code under <strong>Shop pairing</strong> with the Shops page in the portal.</span></li>
+            <li><span class="lo">"Client replaced" = ມີ Print Client ອື່ນໃຊ້ລະຫັດດຽວກັນ — ປິດໂຕອື່ນ.</span><span class="en">"Client replaced" means another Print Client uses the same code — stop the other one.</span></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">ເຄື່ອງພິມ Network: "No response from …:9100"</span><span class="en inline"> · Network printer: "No response from …:9100"</span></summary>
+        <div>
+          <p class="lo">ກວດໄຟເຄື່ອງພິມ, ສາຍ LAN ແລະ IP. ຄອມ ແລະ ເຄື່ອງພິມຕ້ອງຢູ່ວົງເຄືອຂ່າຍດຽວກັນ (ເຊັ່ນ 192.168.1.x).</p>
+          <p class="en">Check the printer's power, LAN cable and IP. The computer and printer must be on the same network (e.g. 192.168.1.x).</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">ງານເປັນ Failed: "Gave up after 10 attempts"</span><span class="en inline"> · Job failed: "Gave up after 10 attempts"</span></summary>
+        <div>
+          <p class="lo">ແກ້ບັນຫາເຄື່ອງພິມກ່ອນ (ເບິ່ງຂໍ້ຄວາມໃນງານ) ແລ້ວກົດ <strong>Retry</strong>. ຖ້າບໍ່ຕ້ອງການພິມແລ້ວ ກົດ <strong>Clear failed</strong>.</p>
+          <p class="en">Fix the printer first (see the job's message), then press <strong>Retry</strong>. If it's no longer needed, press <strong>Clear failed</strong>.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="lo">ແຖວສຸດທ້າຍຂອງໃບບິນຖືກຕັດ</span><span class="en inline"> · The last lines of the receipt get cut off</span></summary>
+        <div>
+          <p class="lo">ເພີ່ມ <code>PRINT_CUT_FEED_LINES=8</code> ໃນ <code>.env</code> ແລ້ວ Restart service.</p>
+          <p class="en">Add <code>PRINT_CUT_FEED_LINES=8</code> to <code>.env</code> and restart the service.</p>
+        </div>
+      </details>
+    </section>
+
+    <footer>Print Client · D:\sambaPOS\print_client\docs\user-guide.html</footer>
+  </main>
+</div>
+
+<script>
+  (() => {
+    const buttons = document.querySelectorAll("[data-set-lang]");
+    const apply = (lang) => {
+      document.body.dataset.lang = lang;
+      document.documentElement.lang = lang === "en" ? "en" : "lo";
+      buttons.forEach((button) => button.classList.toggle("active", button.dataset.setLang === lang));
+      try { localStorage.setItem("print-client-guide-lang", lang); } catch {}
+    };
+    let saved = "both";
+    try { saved = localStorage.getItem("print-client-guide-lang") || "both"; } catch {}
+    apply(saved);
+    buttons.forEach((button) => button.addEventListener("click", () => apply(button.dataset.setLang)));
+    window.addEventListener("beforeprint", () => document.querySelectorAll("details").forEach((item) => { item.dataset.wasOpen = item.open; item.open = true; }));
+    window.addEventListener("afterprint", () => document.querySelectorAll("details").forEach((item) => { item.open = item.dataset.wasOpen === "true"; }));
+  })();
+</script>
+</body>
+</html>

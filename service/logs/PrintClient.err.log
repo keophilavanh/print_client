@@ -1,0 +1,8 @@
+[print_client] Printer Kitchen Printer is offline: No response from 192.168.1.50:9100
+[print_client] Disconnected from Print Service (io client disconnect)
+[print_client] Printer Kitchen Printer is offline: No response from 192.168.1.50:9100
+[print_client] Disconnected from Print Service (io client disconnect)
+[print_client] Cannot connect to Print Service: websocket error
+[print_client] Printer Kitchen Printer is offline: Network unreachable
+[print_client] Printer Casheer is offline: Printing to \\localhost\pos2026 failed: An unexpected network error occurred.
+[print_client] Job d562137a on Casheer: Attempt 1/10 failed: Printing to \\localhost\pos2026 failed: An unexpected network error occurred. — next retry at 5:13:46 PM

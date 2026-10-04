@@ -1,0 +1,33 @@
+2026-10-04 16:52:12,985 DEBUG - Starting WinSW in console mode
+2026-10-04 16:54:12,819 DEBUG - Starting WinSW in console mode
+2026-10-04 16:54:12,828 INFO  - Installing service 'Print Client (PrintClient)'...
+2026-10-04 17:10:03,737 DEBUG - Starting WinSW in console mode
+2026-10-04 17:10:03,740 INFO  - Installing service 'Print Client (PrintClient)'...
+2026-10-04 17:10:03,759 INFO  - Service 'Print Client (PrintClient)' was installed successfully.
+2026-10-04 17:10:03,820 DEBUG - Starting WinSW in console mode
+2026-10-04 17:10:03,820 INFO  - Starting service 'Print Client (PrintClient)'...
+2026-10-04 17:10:03,889 DEBUG - Starting WinSW in service mode
+2026-10-04 17:10:03,895 INFO  - Service 'Print Client (PrintClient)' started successfully.
+2026-10-04 17:10:03,900 INFO  - Starting C:\Program Files\nodejs\node.exe --env-file-if-exists=.env --disable-warning=ExperimentalWarning dist\server.js
+2026-10-04 17:10:03,911 INFO  - Started process 15424
+2026-10-04 17:10:03,921 DEBUG - Forwarding logs of the process System.Diagnostics.Process (node) to WinSW.SizeBasedRollingLogAppender
+2026-10-04 17:10:53,309 INFO  - Stopping PrintClient
+2026-10-04 17:10:53,309 DEBUG - ProcessKill 15424
+2026-10-04 17:10:53,311 DEBUG - Stopping process 15424...
+2026-10-04 17:10:53,343 DEBUG - Process 15424 canceled with code 0.
+2026-10-04 17:10:53,343 INFO  - Finished PrintClient
+2026-10-04 17:11:04,376 DEBUG - Starting WinSW in service mode
+2026-10-04 17:11:04,384 INFO  - Starting C:\Program Files\nodejs\node.exe --env-file-if-exists=.env --disable-warning=ExperimentalWarning dist\server.js
+2026-10-04 17:11:04,403 INFO  - Started process 21468
+2026-10-04 17:11:04,411 DEBUG - Forwarding logs of the process System.Diagnostics.Process (node) to WinSW.SizeBasedRollingLogAppender
+2026-10-04 17:11:37,748 INFO  - Stopping PrintClient
+2026-10-04 17:11:37,748 DEBUG - ProcessKill 21468
+2026-10-04 17:11:37,748 DEBUG - Stopping process 21468...
+2026-10-04 17:11:37,872 DEBUG - Process 21468 canceled with code 0.
+2026-10-04 17:11:37,880 INFO  - Finished PrintClient
+2026-10-04 17:12:07,843 DEBUG - Starting WinSW in service mode
+2026-10-04 17:12:07,878 INFO  - Starting C:\Program Files\nodejs\node.exe --env-file-if-exists=.env --disable-warning=ExperimentalWarning dist\server.js
+2026-10-04 17:12:07,915 INFO  - Started process 8164
+2026-10-04 17:12:07,928 DEBUG - Forwarding logs of the process System.Diagnostics.Process (node) to WinSW.SizeBasedRollingLogAppender
+2026-10-04 17:38:46,145 DEBUG - Starting WinSW in console mode
+2026-10-04 17:38:46,252 DEBUG - Starting WinSW in console mode
